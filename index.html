@@ -85,13 +85,11 @@ async function registerUser() {
 
   if (data.success) {
 
-    // save participant number
     localStorage.setItem("participant_no", data.participant);
 
     document.getElementById("msg").innerHTML =
       "✅ Registered Successfully<br>Your ID: " + data.participant;
 
-    // redirect to quiz page
     setTimeout(() => {
       window.location = "quiz.html";
     }, 1500);
@@ -99,7 +97,7 @@ async function registerUser() {
   } else {
 
     document.getElementById("msg").innerHTML =
-      "❌ Registration Failed";
+      "❌ " + data.message;   // 👈 shows backend error
 
   }
 }
