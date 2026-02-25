@@ -111,7 +111,7 @@
 <script>
 async function loadParticipants() {
   try {
-    const res = await fetch("/api/participants");
+    const res = await fetch("https://quiz-app-backend-f1yz.onrender.com/api/participants");
     const users = await res.json();
 
     let html = "";
