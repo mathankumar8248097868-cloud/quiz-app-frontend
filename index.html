@@ -68,38 +68,41 @@ button:hover {
   <div class="message" id="msg"></div>
 </div>
 <script>
-async function register() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const msg = document.getElementById("msg");
-  msg.textContent = "";
+async function registerUser() {
 
-  if (!name || !email) {
-    msg.textContent = "Please enter both name and email!";
-    return;
-  }
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
 
-  try {
-    const res = await fetch("https://quiz-app-backend-f1yz.onrender.com/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email })
-    });
+  const res = await fetch("https://quiz-app-backend-f1yz.onrender.com/api/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, email })
+  });
 
-    const data = await res.json();
-    if (data.success) {
-      localStorage.setItem("participant", name);
-      localStorage.setItem("participant_no", data.participant); // store participant_no
-      window.location.href = "quiz.html";
-    } else {
-      msg.textContent = data.message;
-    }
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "Server error, try again!";
+  const data = await res.json();
+
+  if (data.success) {
+
+    // save participant number
+    localStorage.setItem("participant_no", data.participant);
+
+    document.getElementById("msg").innerHTML =
+      "✅ Registered Successfully<br>Your ID: " + data.participant;
+
+    // redirect to quiz page
+    setTimeout(() => {
+      window.location = "quiz.html";
+    }, 1500);
+
+  } else {
+
+    document.getElementById("msg").innerHTML =
+      "❌ Registration Failed";
+
   }
 }
 </script>
-
 </body>
 </html>
