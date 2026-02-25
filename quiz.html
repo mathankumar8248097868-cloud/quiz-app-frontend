@@ -232,7 +232,7 @@ function finish(){
   document.getElementById("finalScore").textContent = score;
 
   const participant_no = localStorage.getItem("participant_no");
-  fetch("/api/submit-score",{
+   fetch("https://quiz-app-backend-f1yz.onrender.com/api/submit-score",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({score,participant_no})
